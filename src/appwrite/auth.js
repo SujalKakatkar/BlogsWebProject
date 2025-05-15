@@ -3,7 +3,7 @@ import conf from "../conf/conf";
 
 
 export class AuthService{
-    client = new Client();
+    client = new Client();       
     account;
 
     constructor() {
@@ -15,14 +15,19 @@ export class AuthService{
     async createAccount({email, password, name}) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
-            return userAccount ? this.logIn({ email, password }) : userAccount;
+            // return userAccount ? this.logIn({ email, password }) : userAccount;
+            if (userAccount) {
+                return this.login({email, password})
+            } else {
+                return userAccount
+            }
 
         } catch (error) {
             throw error;
         }
     }
 
-    async logIn({ email, password }) {
+    async login({ email, password }) {
         try {
             return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
@@ -40,7 +45,7 @@ export class AuthService{
         return null;
     }
 
-    async logOut() {
+    async logout() {
         try {
             await this.account.deleteSessions();
         } catch (error) {

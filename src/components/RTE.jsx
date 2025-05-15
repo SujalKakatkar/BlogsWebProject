@@ -1,23 +1,27 @@
 /** @format */
-
+//real time text editor
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
 
-export default function RTE({ name, control, label, defaultValue = "" }) {
+export default function RTE({ name, control, label,textColor="text-black", defaultValue = "" }) {
   return (
     <div className="w-full">
-      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
+      {label && <label className={`inline-block mb-1 pl-1 ${textColor}`}>{label}</label>}
 
       <Controller
         name={name || "content"}
         control={control}
-        render={({ field: { onchange } }) => (
+        render={({ field: { onChange } }) => (
           <Editor
+            tinymceScriptSrc={'/public/tinymce/js/tinymce/tinymce.min.js'}
             initialValue={defaultValue}
             init={{
               initialValue: defaultValue,
-              height: 500,
+              
+              skin: 'tinymce-5-dark',
+              skin_url:'/public/tinymce/js/tinymce/skins/ui/tinymce-5-dark',
+              height: 400,
               menubar: true,
               plugins: [
                 "image",
@@ -44,9 +48,9 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
               toolbar:
                 "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
               content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                "body { background-color:#101829; color:white; font-family:Helvetica,Arial,sans-serif; font-size:24px }",
             }}
-            onEditorChange={onchange}
+            onEditorChange={onChange}
           />
         )}
       />

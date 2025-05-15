@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Container, Logo, LogoutBtn } from "../index";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
@@ -31,26 +32,37 @@ function Header() {
       active: authStatus,
     },
     {
+      name: "My Posts",
+      slug: "/my-post",
+      active:authStatus,
+    },
+    {
       name: "Add Post",
       slug: "/add-post",
       active: authStatus,
     },
+    {
+      name: "Profile",
+      slug: "/profile",
+      active:authStatus
+    }
+    
   ];
   return (
-    <header className="py-3 shadow bg-gray-500">
+    <header className="py-3 shadow bg-gray-900 w-full">
       <Container>
         <nav className="flex">
-          <div className="mr-4">
+          <div className="mr-4 hidden sm:block">
             <Link to="/">
               <Logo width="70px" />
             </Link>
           </div>
-          <ul className="flex ml-auto">
+          <ul className="flex justify-center items-center sm:justify-end w-full ml-auto flex-col sm:flex-row  ">
             {navItems.map((item) => (
               item.active ? (
                 <li key={item.name}>
-                  <button onClick={navigate(item.slug)}
-                    className="inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
+                  <button onClick={()=>navigate(item.slug)}
+                    className="inline-block px-6 py-2 duration-200 text-white  hover:bg-blue-100 hover:text-gray-900 rounded-full"
                   >{item.name}</button>
               </li>
               ): null

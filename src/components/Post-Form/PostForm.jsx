@@ -1,10 +1,10 @@
 /** @format */
-
+//post form
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input,Select, RTE } from "../index";
 import appwriteService from "../../appwrite/config";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function PostForm({ post }) {
@@ -12,23 +12,26 @@ function PostForm({ post }) {
     useForm({
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "active",
       },
     });
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.user.userData);
+  const userData = useSelector((state) => state.auth.userData);
   const submit = async (data) => {
     if (post) {
       const file = data.image[0]
-        ? appwriteService.uploadFile(data.image[0])
+        ? await appwriteService.uploadFile(data.image[0])
         : null;
-      file && appwriteService.deleteFile(post.featuredImage);
+      if (file) {
+        
+        appwriteService.deleteFile(post.featuredImage);
+      }
 
       const dbPost = await appwriteService.updatePost(post.$id, {
         ...data,
-        featureImage: file ? file.$id : undefined,
+        featuredImage: file ? file.$id : undefined,
       });
 
       if (dbPost) {
@@ -55,8 +58,10 @@ function PostForm({ post }) {
       return value
         .trim()
         .toLowerCase()
-        .replace(/^[a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+        .replace(/[^\w\s-]/g, "")   // Remove non-word characters except space and hyphen
+      .replace(/\s+/g, "-")       // Replace spaces with -
+      .replace(/-+/g, "-")        // Replace multiple hyphens with one
+      .replace(/^-+|-+$/g, ""); 
     return "";
   }, []);
   useEffect(() => {
@@ -75,25 +80,31 @@ function PostForm({ post }) {
             <Input
                 label="Title :"
                 placeholder="Title"
-                className="mb-4"
+                className="mb-4 w-full"
+                bgColor="bg-gray-900"
+                textColor="text-white"
                 {...register("title", { required: true })}
             />
             <Input
                 label="Slug :"
                 placeholder="Slug"
-                className="mb-4"
+            className="mb-4 w-full"
+            bgColor="bg-gray-900"
+          textColor="text-white"
                 {...register("slug", { required: true })}
                 onInput={(e) => {
                     setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                 }}
             />
-            <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+            <RTE label="Content :" textColor="text-white" name="content" control={control} defaultValue={getValues("content")} />
         </div>
         <div className="w-1/3 px-2">
             <Input
                 label="Featured Image :"
                 type="file"
-                className="mb-4"
+            className="mb-4 w-full"
+            textColor="text-white"
+            bgColor="bg-gray-900"
                 accept="image/png, image/jpg, image/jpeg, image/gif"
                 {...register("image", { required: !post })}
             />
@@ -109,7 +120,8 @@ function PostForm({ post }) {
             <Select
                 options={["active", "inactive"]}
                 label="Status"
-                className="mb-4"
+            className="mb-4"
+            bgColor="bg-gray-900"
                 {...register("status", { required: true })}
             />
             <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">

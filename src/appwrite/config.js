@@ -1,3 +1,4 @@
+// accessing all database 
 import { Client, Databases, ID, Query, Storage } from "appwrite";
 import conf from "../conf/conf";
 
@@ -11,12 +12,12 @@ export class Service {
         this.client
             .setEndpoint(conf.appwriteUrl)
             .setProject(conf.appwriteProjectId);
-        
+
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client)
     }
 
-    async createPost({ title, slug, content, featureImage, status, userId }) {
+    async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -25,7 +26,7 @@ export class Service {
                 {
                     title,
                     content,
-                    featureImage,
+                    featuredImage,
                     status,
                     userId
                 }
@@ -35,8 +36,33 @@ export class Service {
 
         }
     }
-
-    async updatePost(slug, { title, content, featureImage, status }) {
+    async  createProfile({userId, profileImage}) {
+        try {
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteProfleCollectionId,
+                userId,
+                {
+                    userId,
+                    profileImage,
+                }
+            )
+        } catch (error) {
+             console.log("Appwrite service :: createProfile :: error", error);
+        }
+    }
+     getProfile(userId) {
+        try {
+            return this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteProfleCollectionId,
+                userId
+            )
+        } catch (error) {
+            console.log("Appwrite service :: getProfile :: error", error);
+        }
+    }
+    async updatePost(slug, { title, content, featuredImage, status }) {
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -45,7 +71,7 @@ export class Service {
                 {
                     title,
                     content,
-                    featureImage,
+                    featuredImage,
                     status
                 }
             )
@@ -70,15 +96,16 @@ export class Service {
     }
     async getPost(slug) {
         try {
-            await this.databases.getDocument(
+            return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
             )
-            return true
+
         } catch (error) {
             console.log("Appwrite service :: getPost :: error", error);
             return false
+
         }
     }
 
@@ -87,7 +114,7 @@ export class Service {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                queries
+                queries,
             )
         } catch (error) {
             console.log("Appwrite service :: getPosts :: error", error);
@@ -122,10 +149,13 @@ export class Service {
         }
     }
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(
-            conf.appwriteBucketId,
-            fileId
-        )
+        try {
+           
+            return  this.bucket.getFileView(conf.appwriteBucketId, fileId)
+        } catch (error) {
+            console.log("Appwrite service :: getFilePrview :: error", error);
+       }
+
     }
 }
 
