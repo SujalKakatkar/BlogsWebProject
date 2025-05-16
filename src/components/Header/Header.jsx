@@ -11,10 +11,11 @@ function Header() {
   const navigate = useNavigate();
 
   const navItems = [
+    
     {
       name: "Home",
-      slug: "/",
-      active: true,
+      slug: "/home",
+      active: authStatus,
     },
     {
       name: "Login",

@@ -76,13 +76,14 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-        <div className="w-2/3 px-2">
+        <div className="sm:w-2/3 w-full py-2 px-2">
             <Input
                 label="Title :"
                 placeholder="Title"
                 className="mb-4 w-full"
                 bgColor="bg-gray-900"
-                textColor="text-white"
+            textColor="text-white"
+          placeholderTextColor="text-white"
                 {...register("title", { required: true })}
             />
             <Input
@@ -90,7 +91,8 @@ function PostForm({ post }) {
                 placeholder="Slug"
             className="mb-4 w-full"
             bgColor="bg-gray-900"
-          textColor="text-white"
+            textColor="text-white"
+          placeholderTextColor="text-white"
                 {...register("slug", { required: true })}
                 onInput={(e) => {
                     setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
@@ -98,13 +100,14 @@ function PostForm({ post }) {
             />
             <RTE label="Content :" textColor="text-white" name="content" control={control} defaultValue={getValues("content")} />
         </div>
-        <div className="w-1/3 px-2">
+        <div className="sm:w-1/3 w-full py-2 px-2">
             <Input
                 label="Featured Image :"
                 type="file"
             className="mb-4 w-full"
             textColor="text-white"
             bgColor="bg-gray-900"
+            placeholderTextColor="text-white"
                 accept="image/png, image/jpg, image/jpeg, image/gif"
                 {...register("image", { required: !post })}
             />

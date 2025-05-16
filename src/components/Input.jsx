@@ -3,7 +3,7 @@
 import React, { useId } from "react";
 
 const Input = React.forwardRef(function Input(
-  { label, type = "text", className = "", bgColor="bg-white",textColor="text-black", ...props },
+  { label, type = "text", className = "", bgColor="bg-white",textColor="text-black",placeholderTextColor="text-black", ...props },
   ref
 ) {
   const id = useId();
@@ -16,7 +16,7 @@ const Input = React.forwardRef(function Input(
           )}
           <input
               type={type}
-              className={`px-3 py-2 rounded-lg ${bgColor} ${textColor} outline-none duration-200   ${className}`}
+              className={`px-3 py-2 rounded-lg ${bgColor} ${placeholderTextColor} outline-none duration-200   ${className}`}
               ref={ref}
               {...props}
               id={id}

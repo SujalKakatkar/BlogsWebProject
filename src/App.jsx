@@ -11,9 +11,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     authService.getCurrentUser()
-      .then((userDate) => {
-        if (userDate) {
-          dispatch(login({userDate}))
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({userData}))
         } else {
           dispatch(logout())
         }
@@ -24,7 +24,7 @@ function App() {
 
   return !loading ? (
     <div className='w-full block'>
-        <div className='min-h-screen flex flex-wrap flex-col content-between justify-between bg-gray-800'>
+        <div className='min-h-screen flex flex-wrap flex-col content-between justify-between bg-gray-700'>
         <Header />
         <main>
          <Outlet/>

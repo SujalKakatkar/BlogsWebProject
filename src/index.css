@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: poppins;
+    src: url('/public/Fonts/Poppins/Poppins-Medium.ttf');
+}
+
 body,html{
     width:100vw;
     overflow-x: hidden;
+    font-family: "poppins";
 
+}
+.no-blink-cursor .typewriter-cursor {
+  animation: none !important;
 }

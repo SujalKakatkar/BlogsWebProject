@@ -15,7 +15,7 @@ function Allposts() {
        }) 
     })
   return (
-      <div className='w-full'>
+      <div className='w-full py-4'>
           <Container>
               <div className='flex w-full justify-center items-center'>
                   <div className='sm:columns-3'>
