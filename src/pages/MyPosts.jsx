@@ -9,31 +9,30 @@ import { Query } from "appwrite";
 function MyPosts() {
   const [posts, setPosts] = useState([]);
   const userData = useSelector((state) => state.auth.userData);
-
+  if (!userData) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
   useEffect(() => {
-    const loading = async() => { 
-     return await appwriteService
-        .getPosts([Query.equal("userId", userData.$id)])
-        .then((myposts) => {
-          if (myposts) setPosts(myposts.documents);
-        });
-    }
-    if (userData) {
-      loading();
-    }
-    
-  },[userData]);
+    appwriteService
+      .getPosts([Query.equal("userId", userData.$id)])
+      .then((myposts) => {
+        if (myposts) setPosts(myposts.documents);
+      });
+  });
 
   return (
     <div className="w-full py-8">
       <Container>
         <div className="flex w-full justify-center items-center">
           <div className="sm:columns-3">
-            {posts && posts.map((mypost) => (
-              <div key={mypost.$id} className="p-2 w-full">
-                <PostCard {...mypost} />
-              </div>
-            ))}
+            {posts &&
+              posts.map((mypost) => (
+                <div key={mypost.$id} className="p-2 w-full">
+                  <PostCard {...mypost} />
+                </div>
+              ))}
           </div>
         </div>
       </Container>

@@ -23,9 +23,6 @@ function Login() {
       if (session) {
         const userData = await authService.getCurrentUser();
         if (userData) dispatch(authLogin(userData));
-        setTimeout(() => {
-          window.location.reload();
-        },1000)
         navigate("/");
       }
     } catch (error) {
