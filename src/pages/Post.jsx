@@ -43,7 +43,7 @@ export default function Post() {
     
     return post ? (
         <div className="w-full flex justify-center items-center py-8 ">
-            <div className='px-4'>
+            <div className='w-[50%] px-4'>
                 <div className=" flex justify-center rounded-t-xl p-4 bg-gray-900 ">
                      <img
                         src={appwriteService.getFilePreview(post.featuredImage)}

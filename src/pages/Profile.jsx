@@ -85,7 +85,7 @@ function Profile() {
                 <div key={mypost.$id} className="p-2 w-full object-cover">
                   <PostCard {...mypost} />
                 </div>
-              )) || "No post available"}
+              ))}
             </div>
           </div>
         </div>
