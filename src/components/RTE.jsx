@@ -15,13 +15,13 @@ export default function RTE({ name, control, label,textColor="text-black", defau
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
-            tinymceScriptSrc={'../assests/tinymce/js/tinymce/tinymce.min.js'}
+            tinymceScriptSrc={'/tinymce/js/tinymce/tinymce.min.js'}
             initialValue={defaultValue}
             init={{
               initialValue: defaultValue,
               
               skin: 'tinymce-5-dark',
-              skin_url:'../assests/tinymce/js/tinymce/skins/ui/tinymce-5-dark',
+              skin_url:'/tinymce/js/tinymce/skins/ui/tinymce-5-dark',
               height: 400,
               menubar: true,
               plugins: [
