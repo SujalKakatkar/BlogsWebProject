@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Container, Logo, LogoutBtn } from "../index";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import toggleIcon from '../../assests/images/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg'
 
 function Header() {
   const [isOpen, setIsOpen]=useState(false)
@@ -95,7 +96,7 @@ function Header() {
             )}
           </ul>)}
           <div onClick={toggleMenu} className="sm:hidden flex justify-center items-center absolute right-3 top-3">
-          <img src="../../assests/images/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+          <img src={toggleIcon} alt="" />
           </div>
         </nav>
       </Container>
