@@ -95,7 +95,7 @@ function Header() {
             )}
           </ul>)}
           <div onClick={toggleMenu} className="sm:hidden flex justify-center items-center absolute right-3 top-3">
-          <img src="/public/icons/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
+          <img src="../../assests/images/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="" />
           </div>
         </nav>
       </Container>
