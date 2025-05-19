@@ -1,0 +1,7 @@
+# Ignore TypeScript files in GitHub language stats
+*.ts linguist-detectable=false
+*.tsx linguist-detectable=false
+
+# Optional: Ignore third-party or vendor folders
+tinymce/** linguist-vendored
+vendor/** linguist-vendored
